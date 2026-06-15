@@ -12,21 +12,21 @@ class Program {
         int opcao;
         do {
             Console.Clear();
-            Console.WriteLine("╔══════════════════════════════════════╗");
-            Console.WriteLine("║     SISTEMA COPA DO MUNDO 2026       ║");
-            Console.WriteLine("╠══════════════════════════════════════╣");
-            Console.WriteLine("║  1 - Gerenciar Seleções              ║");
-            Console.WriteLine("║  2 - Gerenciar Estádios              ║");
-            Console.WriteLine("║  3 - Gerenciar Jogos                 ║");
-            Console.WriteLine("║  4 - Registrar Resultado             ║");
-            Console.WriteLine("║  5 - Gerar Tabela dos Grupos         ║");
-            Console.WriteLine("║  6 - Mostrar Melhores Terceiros      ║");
-            Console.WriteLine("║  7 - Gerar Mata-Mata                 ║");
-            Console.WriteLine("║  8 - Registrar Resultados Mata-Mata  ║");
-            Console.WriteLine("║  9 - Mostrar Campeão                 ║");
+            Console.WriteLine("╔═══════════════════════════════════════╗");
+            Console.WriteLine("║     SISTEMA COPA DO MUNDO 2026        ║");
+            Console.WriteLine("╠═══════════════════════════════════════╣");
+            Console.WriteLine("║  1 - Gerenciar Seleções               ║");
+            Console.WriteLine("║  2 - Gerenciar Estádios               ║");
+            Console.WriteLine("║  3 - Gerenciar Jogos                  ║");
+            Console.WriteLine("║  4 - Registrar Resultado              ║");
+            Console.WriteLine("║  5 - Gerar Tabela dos Grupos          ║");
+            Console.WriteLine("║  6 - Mostrar Melhores Terceiros       ║");
+            Console.WriteLine("║  7 - Gerar Mata-Mata                  ║");
+            Console.WriteLine("║  8 - Registrar Resultados Mata-Mata   ║");
+            Console.WriteLine("║  9 - Mostrar Campeão                  ║");
             Console.WriteLine("║  10 - Relatórios                      ║");
-            Console.WriteLine("║  0 - Sair                            ║");
-            Console.WriteLine("╚══════════════════════════════════════╝");
+            Console.WriteLine("║  0 - Sair                             ║");
+            Console.WriteLine("╚═══════════════════════════════════════╝");
             Console.Write("\nEscolha uma opção: ");
 
             opcao = Helpers.LerInteiro();

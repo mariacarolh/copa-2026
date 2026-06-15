@@ -18,8 +18,8 @@ static class Helpers {
             while (!int.TryParse(Console.ReadLine(), out val)) {
                 Console.Write("Valor inválido. " + prompt);
             }
-            if (val < 0) { 
-                Console.WriteLine("Valor não pode ser negativo."); 
+            if (val < 0) {
+                Console.WriteLine("Valor não pode ser negativo.");
             }
         } while (val < 0);
         return val;
@@ -44,16 +44,16 @@ static class Helpers {
             val = (Console.ReadLine()?.Trim() ?? "").ToUpper();
             bool ok = false;
 
-            foreach (string g in Dados.GRUPOS_VALIDOS)
-                if (g == val) { 
-                    ok = true; 
-                    break; 
+            foreach (string g in Dados.GRUPOS_VALIDOS) {
+                if (g == val) {
+                    ok = true;
+                    break;
                 }
+            }
             if (!ok) {
                 Console.WriteLine("Grupo inválido. Use A até L.");
-            }
-            else { 
-                return val; 
+            } else {
+                return val;
             }
         } while (true);
     }
@@ -81,23 +81,29 @@ static class Helpers {
     }
 
     public static int BuscarSelecao(int id) {
-        for (int i = 0; i < Dados.totalSelecoes; i++)
-            if (Dados.selecoes[i].Id == id && Dados.selecoes[i].Ativo)
+        for (int i = 0; i < Dados.totalSelecoes; i++) {
+            if (Dados.selecoes[i].Id == id && Dados.selecoes[i].Ativo) {
                 return i;
+            }
+        }
         return -1;
     }
 
     public static int BuscarEstadio(int id) {
-        for (int i = 0; i < Dados.totalEstadios; i++)
-            if (Dados.estadios[i].Id == id && Dados.estadios[i].Ativo)
+        for (int i = 0; i < Dados.totalEstadios; i++) {
+            if (Dados.estadios[i].Id == id && Dados.estadios[i].Ativo) {
                 return i;
+            }
+        }
         return -1;
     }
 
     public static int BuscarJogo(int id) {
-        for (int i = 0; i < Dados.totalJogos; i++)
-            if (Dados.jogos[i].Id == id && Dados.jogos[i].Ativo)
+        for (int i = 0; i < Dados.totalJogos; i++) {
+            if (Dados.jogos[i].Id == id && Dados.jogos[i].Ativo) {
                 return i;
+            }
+        }
         return -1;
     }
 
@@ -113,9 +119,81 @@ static class Helpers {
 
     public static int ContarSelecoesPorGrupo(string grupo) {
         int count = 0;
-        for (int i = 0; i < Dados.totalSelecoes; i++)
-            if (Dados.selecoes[i].Ativo && Dados.selecoes[i].Grupo == grupo)
+        for (int i = 0; i < Dados.totalSelecoes; i++) {
+            if (Dados.selecoes[i].Ativo && Dados.selecoes[i].Grupo == grupo) {
                 count++;
+            }
+        }
         return count;
+    }
+
+    public static int SelecionarSelecao(string prompt = "Nome da seleção") {
+        while (true) {
+            Console.Write($"{prompt}: ");
+            string termo = Console.ReadLine()?.Trim() ?? "";
+            if (termo == "") return -1;
+
+            int[] matches = new int[Dados.MAX_SELECOES];
+            int total = 0;
+            for (int i = 0; i < Dados.totalSelecoes; i++) {
+                if (Dados.selecoes[i].Ativo &&
+                    Dados.selecoes[i].Nome.ToLower().Contains(termo.ToLower())) {
+                    matches[total++] = i;
+                }
+            }
+
+            if (total == 0) {
+                Console.WriteLine("Nenhuma seleção encontrada. Tente novamente.");
+                continue;
+            }
+            if (total == 1) {
+                Console.WriteLine($"  → {Dados.selecoes[matches[0]].Nome}");
+                return matches[0];
+            }
+
+            for (int i = 0; i < total; i++) {
+                Console.WriteLine($"  {i + 1} - {Dados.selecoes[matches[i]].Nome} (Grupo {Dados.selecoes[matches[i]].Grupo})");
+            }
+            Console.Write("Escolha o número (0 = cancelar): ");
+            int op = LerInteiro();
+            if (op == 0) return -1;
+            if (op >= 1 && op <= total) return matches[op - 1];
+            Console.WriteLine("Opção inválida.");
+        }
+    }
+
+    public static int SelecionarEstadio(string prompt = "Nome do estádio") {
+        while (true) {
+            Console.Write($"{prompt}: ");
+            string termo = Console.ReadLine()?.Trim() ?? "";
+            if (termo == "") return -1;
+
+            int[] matches = new int[Dados.MAX_ESTADIOS];
+            int total = 0;
+            for (int i = 0; i < Dados.totalEstadios; i++) {
+                if (Dados.estadios[i].Ativo &&
+                    Dados.estadios[i].Nome.ToLower().Contains(termo.ToLower())) {
+                    matches[total++] = i;
+                }
+            }
+
+            if (total == 0) {
+                Console.WriteLine("Nenhum estádio encontrado. Tente novamente.");
+                continue;
+            }
+            if (total == 1) {
+                Console.WriteLine($"  → {Dados.estadios[matches[0]].Nome}");
+                return matches[0];
+            }
+
+            for (int i = 0; i < total; i++) {
+                Console.WriteLine($"  {i + 1} - {Dados.estadios[matches[i]].Nome} ({Dados.estadios[matches[i]].Cidade})");
+            }
+            Console.Write("Escolha o número (0 = cancelar): ");
+            int op = LerInteiro();
+            if (op == 0) return -1;
+            if (op >= 1 && op <= total) return matches[op - 1];
+            Console.WriteLine("Opção inválida.");
+        }
     }
 }

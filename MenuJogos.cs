@@ -50,39 +50,45 @@ static class MenuJogos {
         string fase = Helpers.LerString("Fase: ");
 
         string grupo = "";
-        if (fase.ToLower() == "grupo")
+        if (fase.ToLower() == "grupo") {
             grupo = Helpers.LerGrupo("Grupo (A-L): ");
+        }
 
         // Data
         string data = Helpers.LerData("Data do jogo");
 
         // Estádio
-        MenuEstadios.Listar();
-        Console.Write("ID do estádio: ");
-        int idEstadio = Helpers.LerInteiro();
-        if (Helpers.BuscarEstadio(idEstadio) < 0) {
-            Console.WriteLine("Estádio inválido!");
+        int idxEst = Helpers.SelecionarEstadio("Estádio");
+        if (idxEst < 0) {
+            Console.WriteLine("Operação cancelada.");
+            Helpers.Pausar();
+            return;
+        }
+        int idEstadio = Dados.estadios[idxEst].Id;
+
+        // Seleções
+        int idxA = Helpers.SelecionarSelecao("Time A");
+        if (idxA < 0) {
+            Console.WriteLine("Operação cancelada.");
             Helpers.Pausar();
             return;
         }
 
-        // Seleções
-        MenuSelecoes.Listar();
-        Console.Write("ID do Time A: ");
-        int idA = Helpers.LerInteiro();
-        Console.Write("ID do Time B: ");
-        int idB = Helpers.LerInteiro();
+        int idxB = Helpers.SelecionarSelecao("Time B");
+        if (idxB < 0) {
+            Console.WriteLine("Operação cancelada.");
+            Helpers.Pausar();
+            return;
+        }
 
-        if (idA == idB) {
+        if (idxA == idxB) {
             Console.WriteLine("Um time não pode jogar contra ele mesmo!");
             Helpers.Pausar();
             return;
         }
-        if (Helpers.BuscarSelecao(idA) < 0 || Helpers.BuscarSelecao(idB) < 0) {
-            Console.WriteLine("Seleção inválida!");
-            Helpers.Pausar();
-            return;
-        }
+
+        int idA = Dados.selecoes[idxA].Id;
+        int idB = Dados.selecoes[idxB].Id;
 
         Jogo j;
         j.Id                  = Dados.proximoIdJogo++;
@@ -116,16 +122,18 @@ static class MenuJogos {
                 continue;
             }
 
-            string nomeA    = Helpers.NomeSelecao(j.IdTimeA);
-            string nomeB    = Helpers.NomeSelecao(j.IdTimeB);
-            string estadio  = Helpers.NomeEstadio(j.IdEstadio);
+            string nomeA     = Helpers.NomeSelecao(j.IdTimeA);
+            string nomeB     = Helpers.NomeSelecao(j.IdTimeB);
+            string estadio   = Helpers.NomeEstadio(j.IdEstadio);
             string resultado = j.Realizado ? $"{j.GolsA} x {j.GolsB}" : "A realizar";
 
             string extra = "";
-            if (j.Realizado && j.IdVencedorPenaltis > 0)
+            if (j.Realizado && j.IdVencedorPenaltis > 0) {
                 extra = $" (Pên: {Helpers.NomeSelecao(j.IdVencedorPenaltis)})";
+            }
 
-            Console.WriteLine($"[{j.Id,3}] {j.Fase,-10} {j.Grupo,-4} {j.Data,-12} " + $"{nomeA,-20} {resultado,-7} {nomeB,-20} {estadio,-30}{extra}");
+            Console.WriteLine($"[{j.Id,3}] {j.Fase,-10} {j.Grupo,-4} {j.Data,-12} " +
+                              $"{nomeA,-20} {resultado,-7} {nomeB,-20} {estadio,-30}{extra}");
             achou = true;
         }
 
@@ -147,8 +155,9 @@ static class MenuJogos {
             string placar  = j.Realizado ? $"{j.GolsA} x {j.GolsB}" : "x";
 
             string extra = "";
-            if (j.Realizado && j.IdVencedorPenaltis > 0)
+            if (j.Realizado && j.IdVencedorPenaltis > 0) {
                 extra = $" (Pên: {Helpers.NomeSelecao(j.IdVencedorPenaltis)})";
+            }
 
             Console.WriteLine($"  Jogo {j.Id,3}: {nomeA,-20} {placar,-7} {nomeB,-20}" +
                               $"  {estadio,-30} {j.Data}{extra}");
@@ -157,6 +166,7 @@ static class MenuJogos {
 
     public static void Alterar() {
         Helpers.Titulo("Alterar Jogo");
+        Listar();
         Console.Write("ID do jogo a alterar: ");
         int id  = Helpers.LerInteiro();
         int idx = Helpers.BuscarJogo(id);
@@ -175,10 +185,15 @@ static class MenuJogos {
 
         Dados.jogos[idx].Data = Helpers.LerData("Nova data");
 
-        Console.Write("Novo ID do estádio (0 para manter): ");
-        int novoEst = Helpers.LerInteiro();
-        if (novoEst != 0 && Helpers.BuscarEstadio(novoEst) >= 0)
-            Dados.jogos[idx].IdEstadio = novoEst;
+        // Estádio: busca por nome, ENTER para manter
+        Console.Write("Novo estádio (ENTER para manter): ");
+        string termo = Console.ReadLine()?.Trim() ?? "";
+        if (termo != "") {
+            int idxEst = Helpers.SelecionarEstadio("Nome do novo estádio");
+            if (idxEst >= 0) {
+                Dados.jogos[idx].IdEstadio = Dados.estadios[idxEst].Id;
+            }
+        }
 
         Console.WriteLine("Jogo alterado com sucesso!");
         CsvHelper.SalvarTodos();
@@ -187,6 +202,7 @@ static class MenuJogos {
 
     public static void Excluir() {
         Helpers.Titulo("Excluir Jogo");
+        Listar();
         Console.Write("ID do jogo a excluir: ");
         int id  = Helpers.LerInteiro();
         int idx = Helpers.BuscarJogo(id);
@@ -203,8 +219,9 @@ static class MenuJogos {
             Dados.jogos[idx].Ativo = false;
             Console.WriteLine("Jogo excluído.");
             CsvHelper.SalvarTodos();
+        } else {
+            Console.WriteLine("Operação cancelada.");
         }
-        else Console.WriteLine("Operação cancelada.");
         Helpers.Pausar();
     }
 }
@@ -247,8 +264,7 @@ static class JogoHelper {
             int pens = Helpers.LerInteiro();
             if (pens == 1) { 
                 Dados.jogos[idx].IdVencedorPenaltis = j.IdTimeA;
-            }
-            else if (pens == 2) { 
+            } else if (pens == 2) { 
                 Dados.jogos[idx].IdVencedorPenaltis = j.IdTimeB;
             } else {
                 Console.WriteLine("Opção inválida. Escolha 1 ou 2.");

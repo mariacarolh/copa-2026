@@ -17,16 +17,17 @@ static class MenuRelatorios {
 
             switch (op) {
                 case 1: 
-                    Classificacao.GerarTabela();              
+                    Classificacao.GerarTabela();
                     break;
                 case 2: 
-                    RelatorioJogosGrupo();                   
+                    RelatorioJogosGrupo();
                     break;
                 case 3:
-                    Classificacao.MelhoresTerceiros();   
+                    Classificacao.MelhoresTerceiros();
                     break;
                 case 4: 
-                    MataMata.MostrarChave(); Helpers.Pausar();
+                    MataMata.MostrarChave();
+                    Helpers.Pausar();
                     break;
                 case 5:
                     CsvHelper.SalvarRelatorioFinal();
@@ -52,10 +53,11 @@ static class MenuRelatorios {
         foreach (string grupo in Dados.GRUPOS_VALIDOS) {
             bool temJogo = false;
 
-            for (int i = 0; i < Dados.totalJogos; i++)
+            for (int i = 0; i < Dados.totalJogos; i++) {
                 if (Dados.jogos[i].Ativo && Dados.jogos[i].Fase == "Grupo" && Dados.jogos[i].Grupo == grupo) {
                     temJogo = true;
                 }
+            }
 
             if (!temJogo) {
                 continue; 

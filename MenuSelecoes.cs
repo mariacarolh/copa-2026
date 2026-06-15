@@ -76,9 +76,11 @@ static class MenuSelecoes {
             string grupo = Dados.GRUPOS_VALIDOS[g];
             bool temGrupo = false;
 
-            for (int i = 0; i < Dados.totalSelecoes; i++)
-                if (Dados.selecoes[i].Ativo && Dados.selecoes[i].Grupo == grupo)
+            for (int i = 0; i < Dados.totalSelecoes; i++) {
+                if (Dados.selecoes[i].Ativo && Dados.selecoes[i].Grupo == grupo) {
                     temGrupo = true;
+                }
+            }
 
             if (!temGrupo) {
                 continue; 
@@ -88,7 +90,7 @@ static class MenuSelecoes {
             Console.WriteLine($"  {"ID",-5} {"Nome",-25}");
             Console.WriteLine("  " + new string('-', 32));
 
-            for (int i = 0; i < Dados.totalSelecoes; i++)  {
+            for (int i = 0; i < Dados.totalSelecoes; i++) {
                 Selecao s = Dados.selecoes[i];
                 if (s.Ativo && s.Grupo == grupo) {
                     Console.WriteLine($"  {s.Id,-5} {s.Nome,-25}");
@@ -103,18 +105,16 @@ static class MenuSelecoes {
 
     public static void Alterar() {
         Helpers.Titulo("Alterar Seleção");
-        Console.Write("ID da seleção a alterar: ");
-        int id  = Helpers.LerInteiro();
-        int idx = Helpers.BuscarSelecao(id);
+        int idx = Helpers.SelecionarSelecao("Nome da seleção a alterar");
 
         if (idx < 0) {
-            Console.WriteLine("Seleção não encontrada!");
+            Console.WriteLine("Operação cancelada.");
             Helpers.Pausar();
             return;
         }
 
         Console.WriteLine($"Seleção atual: {Dados.selecoes[idx].Nome} - Grupo {Dados.selecoes[idx].Grupo}");
-        string novoNome  = Helpers.LerString("Novo nome (ENTER para manter): ");
+        string novoNome = Helpers.LerString("Novo nome: ");
 
         // Lê o grupo explicitamente (sem "manter", para simplificar)
         Console.Write("Novo grupo A-L (ENTER para manter): ");
@@ -122,11 +122,14 @@ static class MenuSelecoes {
         string novoGrupo = entrada == "" ? Dados.selecoes[idx].Grupo : entrada;
 
         bool grupoValido = false;
-        foreach (string g in Dados.GRUPOS_VALIDOS)
-            if (g == novoGrupo) { grupoValido = true; break; }
+        foreach (string g in Dados.GRUPOS_VALIDOS) {
+            if (g == novoGrupo) {
+                grupoValido = true;
+                break;
+            }
+        }
 
-        if (!grupoValido)
-        {
+        if (!grupoValido) {
             Console.WriteLine("Grupo inválido.");
             Helpers.Pausar();
             return;
@@ -149,12 +152,10 @@ static class MenuSelecoes {
 
     public static void Excluir() {
         Helpers.Titulo("Excluir Seleção");
-        Console.Write("ID da seleção a excluir: ");
-        int id  = Helpers.LerInteiro();
-        int idx = Helpers.BuscarSelecao(id);
+        int idx = Helpers.SelecionarSelecao("Nome da seleção a excluir");
 
         if (idx < 0) {
-            Console.WriteLine("Seleção não encontrada!");
+            Console.WriteLine("Operação cancelada.");
             Helpers.Pausar();
             return;
         }
@@ -165,8 +166,9 @@ static class MenuSelecoes {
             Dados.selecoes[idx].Ativo = false;
             Console.WriteLine("Seleção excluída.");
             CsvHelper.SalvarTodos();
+        } else {
+            Console.WriteLine("Operação cancelada.");
         }
-        else Console.WriteLine("Operação cancelada.");
         Helpers.Pausar();
     }
 }

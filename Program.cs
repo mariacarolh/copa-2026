@@ -25,6 +25,7 @@ class Program {
             Console.WriteLine("║  8 - Registrar Resultados Mata-Mata   ║");
             Console.WriteLine("║  9 - Mostrar Campeão                  ║");
             Console.WriteLine("║  10 - Relatórios                      ║");
+            Console.WriteLine("║  11 - Créditos                        ║");
             Console.WriteLine("║  0 - Sair                             ║");
             Console.WriteLine("╚═══════════════════════════════════════╝");
             Console.Write("\nEscolha uma opção: ");
@@ -61,6 +62,9 @@ class Program {
                     break;
                 case 10: 
                     MenuRelatorios.Exibir();  
+                    break;
+                case 11:
+                    Helpers.Creditos();
                     break;
                 case 0:
                     CsvHelper.SalvarTodos();

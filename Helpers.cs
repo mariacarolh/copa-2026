@@ -196,4 +196,30 @@ static class Helpers {
             Console.WriteLine("Opção inválida.");
         }
     }
+
+    public static void Creditos() {
+        Helpers.Titulo("Créditos");
+
+        Console.WriteLine("  INTEGRANTES");
+        Console.WriteLine("  " + new string('-', 42));
+        Console.WriteLine("  Cesar Augusto Silva RA: 2026109330");
+        Console.WriteLine("  Maria Carolina Pereira RA: 2022202695");
+        Console.WriteLine("  Sara Hadassa B. Carvalho RA: 2022101542");
+
+        Console.WriteLine();
+        Console.WriteLine("  LINGUAGEM");
+        Console.WriteLine("  " + new string('-', 42));
+        Console.WriteLine("  C# (.NET)");
+
+        Console.WriteLine();
+        Console.WriteLine("  RECURSOS UTILIZADOS");
+        Console.WriteLine("  " + new string('-', 42));
+        Console.WriteLine("  Structs — Selecao, Estadio, Jogo");
+        Console.WriteLine("  Matrizes — arrays fixos de structs");
+        Console.WriteLine("  Classes static — menus, helpers, CSV");
+        Console.WriteLine("  Arquivos CSV — persistência de dados");
+        Console.WriteLine("  String format — tabelas alinhadas no console");
+
+        Helpers.Pausar();
+    }
 }

@@ -1,0 +1,49 @@
+﻿id;nome;grupo;ativo
+1;México;A;true
+2;África do Sul;A;true
+3;Coreia do Sul;A;true
+4;Tchéquia;A;true
+5;Canadá;B;true
+6;Bósnia e Herzegovina;B;true
+7;Catar;B;true
+8;Suíça;B;true
+9;Brasil;C;true
+10;Marrocos;C;true
+11;Haiti;C;true
+12;Escócia;C;true
+13;Estados Unidos;D;true
+14;Paraguai;D;true
+15;Austrália;D;true
+16;Turquia;D;true
+17;Alemanha;E;true
+18;Curaçao;E;true
+19;Costa do Marfim;E;true
+20;Equador;E;true
+21;Países Baixos;F;true
+22;Japão;F;true
+23;Suécia;F;true
+24;Tunísia;F;true
+25;Bélgica;G;true
+26;Egito;G;true
+27;Irã;G;true
+28;Nova Zelândia;G;true
+29;Espanha;H;true
+30;Cabo Verde;H;true
+31;Arábia Saudita;H;true
+32;Uruguai;H;true
+33;França;I;true
+34;Senegal;I;true
+35;Iraque;I;true
+36;Noruega;I;true
+37;Argentina;J;true
+38;Argélia;J;true
+39;Áustria;J;true
+40;Jordânia;J;true
+41;Portugal;K;true
+42;Congo;K;true
+43;Uzbequistão;K;true
+44;Colômbia;K;true
+45;Inglaterra;L;true
+46;Croácia;L;true
+47;Gana;L;true
+48;Panamá;L;true

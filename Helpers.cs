@@ -73,11 +73,20 @@ static class Helpers {
         Console.ReadLine();
     }
 
-    public static void Titulo(string texto) {
+    public static void Titulo(string texto)
+    {
         Console.Clear();
-        Console.WriteLine(new string('═', 45));
-        Console.WriteLine("  " + texto.ToUpper());
-        Console.WriteLine(new string('═', 45));
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("╔══════════════════════════════════════════════╗");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"║ {texto.ToUpper().PadRight(42)} ║");
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("╚══════════════════════════════════════════════╝");
+
+        Console.ResetColor();
     }
 
     public static int BuscarSelecao(int id) {
@@ -88,6 +97,8 @@ static class Helpers {
         }
         return -1;
     }
+
+
 
     public static int BuscarEstadio(int id) {
         for (int i = 0; i < Dados.totalEstadios; i++) {

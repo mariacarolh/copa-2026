@@ -168,6 +168,13 @@ static class MenuSelecoes {
             Selecao s = Dados.selecoes[idx];
             s.Ativo = false;
             Dados.selecoes[idx] = s;
+
+            // compacta o array removendo a posição inativa
+            for (int i = idx; i < Dados.totalSelecoes - 1; i++) {
+                Dados.selecoes[i] = Dados.selecoes[i + 1];
+            }
+            Dados.totalSelecoes--;
+
             Console.WriteLine("Seleção excluída.");
             CsvHelper.SalvarTodos();
         } else {

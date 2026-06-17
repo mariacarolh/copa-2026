@@ -125,7 +125,7 @@ class Program
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("║");
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write(" " + Centralizar("🏆 COPA DO MUNDO 2026 🏆", largura - 2));
+        Console.Write(Centralizar("COPA DO MUNDO 2026", largura));
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("║");
         Console.ResetColor();

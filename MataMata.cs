@@ -64,7 +64,7 @@ static class MataMata {
         Dados.totalJogos++;
     }
 
-    // Gerar fase de 32
+    // Gerar fase de 16
     public static void Gerar() {
         Helpers.Titulo("Gerar Mata-Mata");
 
@@ -75,7 +75,7 @@ static class MataMata {
             return;
         }
 
-        if (ExisteFase("32avos")) {
+        if (ExisteFase("16avos")) {
             Console.WriteLine("O mata-mata já foi gerado!");
             Console.WriteLine("Use a opção 'Registrar Resultados Mata-Mata' para avançar as fases.");
             Helpers.Pausar();
@@ -92,12 +92,12 @@ static class MataMata {
         // Chaveamento: 1º A x 3ºmelhor, 1ºB x 3ºmelhor, etc. (simplificado por posição)
         string dataBase = "28/06/2026";
         for (int i = 0; i < 16; i++) {
-            int idxA = cl[i * 2];
-            int idxB = cl[i * 2 + 1];
+            int idxA = cl[i];
+            int idxB = cl[i + 16];
             // Usa estádios em rodízio
             int estIdx = i % Dados.totalEstadios;
             int estId  = Dados.totalEstadios > 0 ? Dados.estadios[estIdx].Id : 1;
-            CriarJogoMata("32avos",
+            CriarJogoMata("16avos",
                 Dados.selecoes[idxA].Id,
                 Dados.selecoes[idxB].Id,
                 dataBase, estId);
@@ -173,10 +173,10 @@ static class MataMata {
 
         if (!temPendente) {
             // Verificar qual fase avançar
-            if (!ExisteFase("32avos")) {
+            if (!ExisteFase("16avos")) {
                 Console.WriteLine("Gere o mata-mata primeiro (opção 7).");
             } else if (!ExisteFase("Oitavas")) {
-                AvancarFase("32avos", "Oitavas", "04/07/2026");
+                AvancarFase("16avos", "Oitavas", "04/07/2026");
                 Console.WriteLine("Oitavas de final geradas!");
             }  else if (!ExisteFase("Quartas")) {
                 AvancarFase("Oitavas", "Quartas", "09/07/2026");
@@ -208,7 +208,7 @@ static class MataMata {
     }
 
     private static void VerificarAvancoFase() {
-        string[] fases = { "32avos", "Oitavas", "Quartas", "Semifinal" };
+        string[] fases = { "16avos", "Oitavas", "Quartas", "Semifinal" };
         string[] proximas = { "Oitavas", "Quartas", "Semifinal", "3Lugar" };
         string[] datas    = { "04/07/2026","09/07/2026","14/07/2026","18/07/2026" };
 
@@ -287,7 +287,7 @@ static class MataMata {
 
     public static void MostrarChave() {
         Helpers.Titulo("Chave do Mata-Mata");
-        string[] fases = { "32avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
+        string[] fases = { "16avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
 
         foreach (string fase in fases) {
             if (!ExisteFase(fase)) { 

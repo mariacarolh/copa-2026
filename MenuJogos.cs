@@ -46,7 +46,7 @@ static class MenuJogos {
         }
 
         // Fase
-        Console.WriteLine("Fases disponíveis: Grupo, 32avos, Oitavas, Quartas, Semifinal, 3Lugar, Final");
+        Console.WriteLine("Fases disponíveis: Grupo, 16avos, Oitavas, Quartas, Semifinal, 3Lugar, Final");
         string fase = Helpers.LerString("Fase: ");
 
         string grupo = "";

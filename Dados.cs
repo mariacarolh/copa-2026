@@ -19,7 +19,7 @@ static class Dados {
 
     public static readonly string[] GRUPOS_VALIDOS = { "A","B","C","D","E","F","G","H","I","J","K","L" };
 
-    public static readonly string[] FASES_MATA = { "32avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
+    public static readonly string[] FASES_MATA = { "16avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
 
     public static int proximoIdSelecao = 1;
     public static int proximoIdEstadio = 1;

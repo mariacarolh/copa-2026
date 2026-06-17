@@ -16,7 +16,7 @@ struct Estadio {
 
 struct Jogo {
     public int Id;
-    public string Fase; // Grupo, 32avos, Oitavas, Quartas, Semifinal, 3Lugar, Final
+    public string Fase; // Grupo, 16avos, Oitavas, Quartas, Semifinal, 3Lugar, Final
     public string Grupo; // A-L (somente fase de grupos)
     public string Data; // dd/MM/yyyy
     public int IdEstadio;

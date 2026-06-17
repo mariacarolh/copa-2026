@@ -247,7 +247,7 @@ static class CsvHelper {
                 System.Text.Encoding.UTF8);
             sw.WriteLine("fase;data;estadio;timeA;golsA;golsB;timeB;vencedor");
 
-            string[] fases = { "32avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
+            string[] fases = { "16avos","Oitavas","Quartas","Semifinal","3Lugar","Final" };
             foreach (string fase in fases) {
                 for (int i = 0; i < Dados.totalJogos; i++) {
                     Jogo j = Dados.jogos[i];

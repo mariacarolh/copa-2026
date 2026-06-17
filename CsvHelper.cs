@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 
-static class CsvHelper
-{
+static class CsvHelper {
+
     private static readonly string DIR = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dados");
 
     private static string Caminho(string arquivo)
@@ -56,48 +56,56 @@ static class CsvHelper
         }
     }
 
-    private static void CarregarSelecoes()
-    {
+    private static void CarregarSelecoes() {
         string path = Caminho("selecoes.csv");
-        if (!File.Exists(path))
-        {
+        if (!File.Exists(path)) {
             return;
         }
 
-        Dados.totalSelecoes = 0;
-        Dados.proximoIdSelecao = 1;
+    Dados.totalSelecoes = 0;
+    Dados.proximoIdSelecao = 1;
 
-        string[] linhas = File.ReadAllLines(path, System.Text.Encoding.UTF8);
+    string[] linhas = File.ReadAllLines(path, System.Text.Encoding.UTF8);
 
-        // pula cabeçalho
-        for (int i = 1; i < linhas.Length; i++)
+    for (int i = 1; i < linhas.Length; i++)
+    {
+        if (string.IsNullOrWhiteSpace(linhas[i]))
         {
-            if (string.IsNullOrWhiteSpace(linhas[i]))
-            {
-                continue;
-            }
-            string[] p = linhas[i].Split(';');
-            if (p.Length < 4)
-            {
-                continue;
-            }
+            continue;
+        }
+        string[] p = linhas[i].Split(';');
+        if (p.Length < 4)
+        {
+            continue;
+        }
 
-            Selecao s;
-            s.Id = int.Parse(p[0]);
-            s.Nome = p[1];
-            s.Grupo = p[2];
-            s.Ativo = p[3].ToLower() == "true";
+        Selecao s;
+        s.Id = int.Parse(p[0]);
+        s.Nome = p[1];
+        s.Grupo = p[2];
+        s.Ativo = p[3].ToLower() == "true";
 
-            if (Dados.totalSelecoes < Dados.MAX_SELECOES)
+        // só carrega se estiver ativa
+        if (!s.Ativo)
+        {
+            // ainda atualiza o próximo ID para não reutilizar IDs
+            if (s.Id >= Dados.proximoIdSelecao)
             {
-                Dados.selecoes[Dados.totalSelecoes++] = s;
-                if (s.Id >= Dados.proximoIdSelecao)
-                {
-                    Dados.proximoIdSelecao = s.Id + 1;
-                }
+                Dados.proximoIdSelecao = s.Id + 1;
+            }
+            continue;
+        }
+
+        if (Dados.totalSelecoes < Dados.MAX_SELECOES)
+        {
+            Dados.selecoes[Dados.totalSelecoes++] = s;
+            if (s.Id >= Dados.proximoIdSelecao)
+            {
+                Dados.proximoIdSelecao = s.Id + 1;
             }
         }
     }
+}
 
     private static void SalvarEstadios()
     {
@@ -110,8 +118,7 @@ static class CsvHelper
         }
     }
 
-    private static void CarregarEstadios()
-    {
+    private static void CarregarEstadios() {
         string path = Caminho("estadios.csv");
         if (!File.Exists(path))
         {
@@ -142,6 +149,16 @@ static class CsvHelper
             e.Capacidade = int.Parse(p[4]);
             e.Ativo = p[5].ToLower() == "true";
 
+            // só carrega se estiver ativo
+            if (!e.Ativo)
+            {
+                if (e.Id >= Dados.proximoIdEstadio)
+                {
+                    Dados.proximoIdEstadio = e.Id + 1;
+                }
+                continue;
+            }
+
             if (Dados.totalEstadios < Dados.MAX_ESTADIOS)
             {
                 Dados.estadios[Dados.totalEstadios++] = e;
@@ -169,8 +186,7 @@ static class CsvHelper
         }
     }
 
-    private static void CarregarJogos()
-    {
+    private static void CarregarJogos() {
         string path = Caminho("jogos.csv");
         if (!File.Exists(path))
         {
@@ -208,6 +224,16 @@ static class CsvHelper
             j.IdVencedorPenaltis = int.Parse(p[10]);
             j.Ativo = p[11].ToLower() == "true";
 
+            // só carrega se estiver ativo
+            if (!j.Ativo)
+            {
+                if (j.Id >= Dados.proximoIdJogo)
+                {
+                    Dados.proximoIdJogo = j.Id + 1;
+                }
+                continue;
+            }
+
             if (Dados.totalJogos < Dados.MAX_JOGOS)
             {
                 Dados.jogos[Dados.totalJogos++] = j;
@@ -219,8 +245,7 @@ static class CsvHelper
         }
     }
 
-    private static void SalvarClassificacao()
-    {
+    private static void SalvarClassificacao() {
         Classificacao.GerarTabelaSilenciosa();
 
         using StreamWriter sw = new StreamWriter(Caminho("classificacao.csv"), false, System.Text.Encoding.UTF8);
@@ -242,8 +267,7 @@ static class CsvHelper
         }
     }
 
-    public static void SalvarRelatorioFinal()
-    {
+    public static void SalvarRelatorioFinal() {
         try
         {
             Directory.CreateDirectory(DIR);

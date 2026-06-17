@@ -142,8 +142,10 @@ static class MenuSelecoes {
             return;
         }
 
-        Dados.selecoes[idx].Nome  = novoNome;
-        Dados.selecoes[idx].Grupo = novoGrupo;
+        Selecao s = Dados.selecoes[idx];
+        s.Nome  = novoNome;
+        s.Grupo = novoGrupo;
+        Dados.selecoes[idx] = s;
 
         Console.WriteLine("Seleção alterada com sucesso!");
         CsvHelper.SalvarTodos();
@@ -163,7 +165,9 @@ static class MenuSelecoes {
         Console.Write($"Confirma exclusão de '{Dados.selecoes[idx].Nome}'? (S/N): ");
         string conf = Console.ReadLine()?.Trim().ToUpper() ?? "N";
         if (conf == "S") {
-            Dados.selecoes[idx].Ativo = false;
+            Selecao s = Dados.selecoes[idx];
+            s.Ativo = false;
+            Dados.selecoes[idx] = s;
             Console.WriteLine("Seleção excluída.");
             CsvHelper.SalvarTodos();
         } else {

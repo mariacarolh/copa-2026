@@ -9,4 +9,16 @@
     <RootNamespace></RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="estadios.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="jogos.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="selecoes.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
